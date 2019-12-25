@@ -2,10 +2,14 @@ def fuel_required(mass):
     return (mass // 3) - 2
 
 
-print(fuel_required(12))
-print(fuel_required(14))
-print(fuel_required(1969))
-print(fuel_required(100756))
+def total(module):
+    tot_for_module = 0
+    fuel = fuel_required(module)
+    while fuel > 0:
+        tot_for_module += fuel
+        fuel = fuel_required(fuel)
+    return tot_for_module
+
 
 modules = [
     108404,
@@ -110,7 +114,22 @@ modules = [
     135624,
 ]
 
-total_fuel = 0
+
+# print(fuel_required(12))
+# print(fuel_required(14))
+# print(fuel_required(1969))
+# print(fuel_required(100756))
+#
+# print(total(14))
+# print(total(1969))
+# print(total(100756))
+
+total_without_fuel = 0
+total_inc_fuel = 0
 for module in modules:
-    total_fuel += fuel_required(module)
-print(total_fuel)
+    total_without_fuel += fuel_required(module)
+    total_inc_fuel += total(module)
+# print(total_without_fuel)
+print(total_inc_fuel)
+
+# fuel_to_transport_fuel = fuel_required(total)

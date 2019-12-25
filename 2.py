@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 def intcode_computer(input_list):
     read_head = 0
     while input_list[read_head] != 99:  # until end code found
@@ -18,7 +21,11 @@ def intcode_computer(input_list):
             # Move to next op code by moving forward 4 positions
             read_head += 4
         else:
-            print("Unknown Opcode, terminating")
+            print(
+                "Unknown Opcode {} at address {}, terminating".format(
+                    input_list[read_head], read_head
+                )
+            )
             break
     return input_list
 
@@ -207,7 +214,29 @@ puzzle = [
     14,
     0,
 ]
+puzz = deepcopy(puzzle)
+puzz[1] = 12
+puzz[2] = 2
+print(intcode_computer(puzz)[0])
 
-puzzle[1] = 12
-puzzle[2] = 2
-print(intcode_computer(puzzle)[0])
+
+# Part 2
+print("Starting part 2")
+result = 19690720
+
+a = 0
+b = 0
+while a < 100 and b < 100:
+    puzz = deepcopy(puzzle)
+    puzz[1] = a
+    puzz[2] = b
+    output = intcode_computer(puzz)
+    if output[0] == result:
+        print("noun = {}, verb = {}".format(a, b))
+        print("Answer = {}".format(100 * a + b))
+        break
+    else:
+        a += 1
+        if a == 100:
+            b += 1
+            a = 0
